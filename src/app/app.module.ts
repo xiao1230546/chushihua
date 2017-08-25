@@ -6,18 +6,27 @@ import { HttpModule } from '@angular/http';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+
+
 import { HttpComponent } from './serve/http/http.component';
 import { VerifyComponent } from './serve/verify/verify.component';
 import { ToastComponent } from './serve/layer/toast/toast.component';
 import { LoadingComponent } from './serve/layer/loading/loading.component';
+import { IntroduceComponent } from './introduce/introduce.component';
+import { MembersHomeComponent } from './personalcenter/members-home/members-home.component';
+import { PhonebindingComponent } from './personalcenter/phonebinding/phonebinding.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HttpComponent,
     VerifyComponent,
+    IntroduceComponent,
+    MembersHomeComponent,
+    LoadingComponent,
     ToastComponent,
-    LoadingComponent
+    PhonebindingComponent
+
   ],
   imports: [
     BrowserModule,
@@ -27,7 +36,12 @@ import { LoadingComponent } from './serve/layer/loading/loading.component';
     BrowserAnimationsModule,
     NgZorroAntdModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    HttpComponent,
+    LoadingComponent,
+    ToastComponent
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

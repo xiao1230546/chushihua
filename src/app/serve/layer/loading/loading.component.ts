@@ -6,11 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loading.component.css']
 })
 export class LoadingComponent implements OnInit {
-  public loadingoff:boolean;
   constructor() {
   }
   ngOnInit() {
-    this.loadingoff =false;
   }
 
 }

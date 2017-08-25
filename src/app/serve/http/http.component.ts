@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import {Headers,Http} from "@angular/http";
-
-declare  var $:any;
-
-@Component({
-  selector: 'app-http',
-  templateUrl: './http.component.html',
-  styleUrls: ['./http.component.css']
-})
+import {ActivatedRoute,} from "@angular/router";
+import "rxjs/Rx";
+import 'rxjs/add/operator/toPromise';
+//declare  var $:any;
 export  const url = "http://192.168.0.201:9010/api";
+@Injectable()
 export class HttpComponent implements OnInit {
   public  privateurl:string;
-  public encodedToken:any;
-  public token:any;
+
+  public tokens:any = this.routInfo.snapshot.queryParams['token'];
+  public encodedToken:any=encodeURIComponent("token="+ this.tokens);
   constructor(
-    private http:Http,
+    public http:Http,
+    public routInfo:ActivatedRoute
 
   ) { }
   getHS(){
@@ -26,11 +25,10 @@ export class HttpComponent implements OnInit {
     return header
   }
   ngOnInit() {
-    this.token = $.cookie('token');
-    this.encodedToken=encodeURIComponent("token="+ this.token);
   }
 
   Mypost(parameter:any):Promise<any>{
+
     let Url = `${url}${this.privateurl}?__h=${this.encodedToken}`;
     let headers:Headers = this.getHS();
     return this.http.post(Url,parameter,{headers:headers})
@@ -40,8 +38,12 @@ export class HttpComponent implements OnInit {
   }
   Myget(parameter:any):Promise<any>{
     let Url = `${url}${this.privateurl}?__h=${this.encodedToken}`;
-    for(let key in parameter){
-      Url =  Url+'&'+ key +'='+ parameter[key];
+    if(parameter){
+      for(let key in parameter){
+        Url =  Url+'&'+ key +'='+ parameter[key];
+      }
+    }else {
+       Url = `${url}${this.privateurl}?__h=${this.encodedToken}`;
     }
     return this.http.get(Url)
       .toPromise()
